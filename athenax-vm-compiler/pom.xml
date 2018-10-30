@@ -37,6 +37,12 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>com.uber.athenax</groupId>
+      <artifactId>athenax-vm-connector-kafka</artifactId>
+      <classifier>tests</classifier>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
     </dependency>
@@ -157,13 +163,13 @@
             <goals>
               <goal>generate</goal>
             </goals>
-            <configuration>
-              <cfgFile>${project.build.directory}/codegen/config.fmpp</cfgFile>
-              <outputDirectory>target/generated-sources</outputDirectory>
-              <templateDirectory>${project.build.directory}/codegen/templates</templateDirectory>
-            </configuration>
           </execution>
         </executions>
+        <configuration>
+          <cfgFile>${project.build.directory}/codegen/config.fmpp</cfgFile>
+          <outputDirectory>target/generated-sources</outputDirectory>
+          <templateDirectory>${project.build.directory}/codegen/templates</templateDirectory>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>

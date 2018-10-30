@@ -154,8 +154,8 @@ class AthenaXYarnClusterDescriptor extends AbstractYarnClusterDescriptor {
 
     // Set up resource type requirements for ApplicationMaster
     Resource capability = Records.newRecord(Resource.class);
-    capability.setMemory(getFlinkConfiguration()
-        .getInteger(JobManagerOptions.JOB_MANAGER_HEAP_MEMORY));
+    capability.setMemory(Integer.parseInt(getFlinkConfiguration()
+        .getString(JobManagerOptions.JOB_MANAGER_HEAP_MEMORY)));
     capability.setVirtualCores(1);
 
     appContext.setApplicationName(job.name());

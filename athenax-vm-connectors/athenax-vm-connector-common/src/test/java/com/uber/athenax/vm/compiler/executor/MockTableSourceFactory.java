@@ -22,8 +22,8 @@ import org.apache.flink.api.java.typeutils.RowTypeInfo;
 import org.apache.flink.table.api.TableSchema;
 import org.apache.flink.table.descriptors.ConnectorDescriptorValidator;
 import org.apache.flink.table.descriptors.DescriptorProperties;
-import org.apache.flink.table.sources.TableSource;
-import org.apache.flink.table.sources.TableSourceFactory;
+import org.apache.flink.table.factories.StreamTableSourceFactory;
+import org.apache.flink.table.sources.StreamTableSource;
 import org.apache.flink.types.Row;
 
 import java.io.ByteArrayInputStream;
@@ -35,12 +35,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.uber.athenax.vm.compiler.executor.MockExternalCatalogTable.CONNECTOR_TYPE;
-import static com.uber.athenax.vm.compiler.executor.MockExternalCatalogTable.CONNECTOR_VERSION;
-import static com.uber.athenax.vm.compiler.executor.MockExternalCatalogTable.TABLE_DATA_CONNECTOR_PROPERTY;
-import static com.uber.athenax.vm.compiler.executor.MockExternalCatalogTable.TABLE_SCHEMA_CONNECTOR_PROPERTY;
+import static com.uber.athenax.vm.compiler.executor.MockExternalCatalogTable.*;
 
-public class MockTableSourceFactory implements TableSourceFactory<Row> {
+public class MockTableSourceFactory implements StreamTableSourceFactory<Row> {
 
   @Override
   public Map<String, String> requiredContext() {
@@ -57,11 +54,12 @@ public class MockTableSourceFactory implements TableSourceFactory<Row> {
     properties.add(TABLE_DATA_CONNECTOR_PROPERTY);
     properties.add(TABLE_SCHEMA_CONNECTOR_PROPERTY + ".#." + "name");
     properties.add(TABLE_SCHEMA_CONNECTOR_PROPERTY + ".#." + "type");
+    //properties.add(TABLE_UPDATE_MODE);
     return properties;
   }
 
   @Override
-  public TableSource<Row> create(Map<String, String> properties) {
+  public StreamTableSource<Row> createStreamTableSource(Map<String, String> properties) {
     DescriptorProperties params = new DescriptorProperties(true);
     params.putProperties(properties);
     TableSchema schema = params.getTableSchema(TABLE_SCHEMA_CONNECTOR_PROPERTY);

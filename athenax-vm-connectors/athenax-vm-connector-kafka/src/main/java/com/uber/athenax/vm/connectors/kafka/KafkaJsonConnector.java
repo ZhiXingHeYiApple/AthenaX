@@ -19,7 +19,7 @@
 package com.uber.athenax.vm.connectors.kafka;
 
 import com.uber.athenax.vm.api.tables.AthenaXTableSinkProvider;
-import org.apache.flink.streaming.connectors.kafka.Kafka09JsonTableSink;
+import org.apache.flink.streaming.connectors.kafka.Kafka010JsonTableSink;
 import org.apache.flink.streaming.connectors.kafka.partitioner.FlinkKafkaPartitioner;
 import org.apache.flink.table.catalog.ExternalCatalogTable;
 import org.apache.flink.table.descriptors.DescriptorProperties;
@@ -30,10 +30,7 @@ import org.apache.flink.types.Row;
 import java.io.IOException;
 import java.util.Properties;
 
-import static com.uber.athenax.vm.connectors.kafka.KafkaConnectorDescriptorValidator.KAFKA_CONFIG_PREFIX;
-import static com.uber.athenax.vm.connectors.kafka.KafkaConnectorDescriptorValidator.PARTITIONER_CLASS_NAME_DEFAULT;
-import static com.uber.athenax.vm.connectors.kafka.KafkaConnectorDescriptorValidator.PARTITIONER_CLASS_NAME_KEY;
-import static com.uber.athenax.vm.connectors.kafka.KafkaConnectorDescriptorValidator.TOPIC_NAME_KEY;
+import static com.uber.athenax.vm.connectors.kafka.KafkaConnectorDescriptorValidator.*;
 
 public class KafkaJsonConnector implements AthenaXTableSinkProvider {
   private static final String TYPE = "kafka+json";
@@ -58,7 +55,7 @@ public class KafkaJsonConnector implements AthenaXTableSinkProvider {
     } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
       throw new IOException(e);
     }
-    return new Kafka09JsonTableSink(topic, conf, partitioner);
+    return new Kafka010JsonTableSink(topic, conf, partitioner);
   }
 
   @Override

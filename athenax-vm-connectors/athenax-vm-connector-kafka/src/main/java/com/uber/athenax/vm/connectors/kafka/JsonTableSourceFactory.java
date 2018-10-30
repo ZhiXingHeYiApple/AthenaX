@@ -21,8 +21,8 @@ package com.uber.athenax.vm.connectors.kafka;
 import org.apache.flink.table.api.TableSchema;
 import org.apache.flink.table.descriptors.ConnectorDescriptorValidator;
 import org.apache.flink.table.descriptors.DescriptorProperties;
+import org.apache.flink.table.factories.StreamTableSourceFactory;
 import org.apache.flink.table.sources.StreamTableSource;
-import org.apache.flink.table.sources.TableSourceFactory;
 import org.apache.flink.types.Row;
 
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ import static com.uber.athenax.vm.connectors.kafka.KafkaConnectorDescriptorValid
 import static com.uber.athenax.vm.connectors.kafka.KafkaConnectorDescriptorValidator.TOPIC_SCHEMA_KEY;
 
 @SuppressWarnings("unused")
-public class JsonTableSourceFactory implements TableSourceFactory<Row> {
+public class JsonTableSourceFactory implements StreamTableSourceFactory<Row> {
 
   @Override
   public Map<String, String> requiredContext() {
@@ -73,7 +73,7 @@ public class JsonTableSourceFactory implements TableSourceFactory<Row> {
   }
 
   @Override
-  public StreamTableSource<Row> create(Map<String, String> properties) {
+  public StreamTableSource<Row> createStreamTableSource(Map<String, String> properties) {
     DescriptorProperties params = new DescriptorProperties(true);
     params.putProperties(properties);
     TableSchema schema = params.getTableSchema(TOPIC_SCHEMA_KEY);

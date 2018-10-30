@@ -36,7 +36,7 @@ final class FlinkTestUtil {
     JobGraph jobGraph = streamGraph.getJobGraph();
     Configuration configuration = new Configuration(conf);
     configuration.addAll(jobGraph.getJobConfiguration());
-    configuration.setLong("taskmanager.memory.size", -1L);
+    configuration.setLong("taskmanager.memory.size", 0L);
     configuration.setInteger("taskmanager.numberOfTaskSlots", jobGraph.getMaximumParallelism());
 
     LocalFlinkMiniCluster cluster = new LocalFlinkMiniCluster(configuration, true);

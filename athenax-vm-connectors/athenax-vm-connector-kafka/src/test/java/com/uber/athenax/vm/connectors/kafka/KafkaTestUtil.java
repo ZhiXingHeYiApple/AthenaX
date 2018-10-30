@@ -19,9 +19,10 @@
 package com.uber.athenax.vm.connectors.kafka;
 
 import kafka.admin.AdminUtils;
-import kafka.common.TopicExistsException;
+import kafka.admin.RackAwareMode;
 import kafka.utils.ZkUtils;
 import org.apache.flink.util.Preconditions;
+import org.apache.kafka.common.errors.TopicExistsException;
 import org.apache.kafka.common.security.JaasUtils;
 
 import java.io.IOException;
@@ -60,7 +61,7 @@ public final class KafkaTestUtil {
       }
 
       try {
-        AdminUtils.createTopic(zkUtils, topic, numPartitions, replFactor, new Properties());
+        AdminUtils.createTopic(zkUtils, topic, numPartitions, replFactor, new Properties(),RackAwareMode.Disabled$.MODULE$);
       } catch (TopicExistsException ignored) {
         return false;
       } catch (RuntimeException e) {
